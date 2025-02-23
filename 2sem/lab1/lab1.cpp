@@ -6,14 +6,14 @@ using namespace std;
 int main()
 {
 	setlocale(LC_ALL, "");
-	int toStackValue;
+	int inputValue;
 	Stack<int> myStack;
 	cout << "Введите числа" << endl;
-	cin >> toStackValue;
-	while (toStackValue != 0)
+	cin >> inputValue;
+	while (inputValue != 0)
 	{
-		myStack.push(toStackValue);
-		cin >> toStackValue;
+		myStack.push(inputValue);
+		cin >> inputValue;
 	}
 	int currentValue;
 	int sizeOfStack = myStack.count();

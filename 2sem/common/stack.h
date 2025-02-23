@@ -5,12 +5,13 @@
 
 using namespace std;
 
-template <typename T>
-
 /// <summary>
 /// Ќиже находитс€ описание класса "Stack", который €вл€етс€ системой хранени€ данных типа "LIFO"
 /// Description of class "Stack" which is data storage "LIFO" system is below.
 /// </summary>
+
+template <typename T>
+
 class Stack
 {
 private:
@@ -18,15 +19,19 @@ private:
 	{
 		T data;
 		Node* next;
+
+		Node(const T& value) : data(value), next(nullptr) {} //создан конструктор структуры Node - created constructor of struct Node
 	};
+
+	int counter;
+	Node* top;
 
 public:
 	/// <summary>
-	/// »спользуем в публичной части указатель на вершину стека, по умолчанию €вл€ющийс€ nullptr, а также вводим целочисленную переменную, отвечающую за размер стека.
-	/// In the public part, we use a pointer to the top of the stack, which is nullptr by default, and also enter an integer variable responsible for the stack size.
+	///  онструктор дл€ структуры Stack
+	/// Constructor for Stack structure
 	/// </summary>
-	Node* top = nullptr;
-	int size = 0;
+	Stack() : counter(0), top(nullptr) {}
 	/// <summary>
 	/// «десь представлен деструктор.
 	/// Here is destructor
@@ -36,28 +41,24 @@ public:
 		clear();
 	}
 	/// <summary>
-	/// ƒалее представлены следующие методы дл€ работы со стеком:
-	/// void push(T)* - добавл€ет элемент на вершину стека
-	/// T pop() * -извлекает элемент с вершины стека и возвращает его значение
-	/// T peek() * -возвращает элемент наход€щийс€ на вершине стека
-	/// int count() * -возвращает количество элементов в коллекции
-	/// void clear() * -удал€ет все элементы из коллекции
-	/// The following methods are presented for working with the stack:
-	/// void push(T)* - adds an element to the top of the stack
-	/// T pop() * -retrieves an element from the top of the stack and returns its value
-	/// T peek() * -returns the element at the top of the stack
-	/// int count() * -returns the number of items in the collection
-	/// void clear() * -removes all items from the collection
+	/// Ќиже представлен метод push. ќн добавл€ет элемент на вершину стека.
+	/// Method push is below. It adds an element on top of the Stack.
 	/// </summary>
 	/// <param name="value"></param>
 	void push(const T& value)
 	{
-		Node* newData = new Node();
+		Node* newData = new Node(value);
 		newData->data = value;
 		newData->next = top;
 		top = newData;
-		++size;
+		++counter;
 	}
+
+	/// <summary>
+	/// ƒалее представлен метод pop. ќн извлекает и возвращает значение с вершины стека.
+	/// The following is the pop method. It extracts and returns a value from the top of the stack.
+	/// </summary>
+	/// <returns></returns>
 
 	T pop()
 	{
@@ -67,14 +68,20 @@ public:
 			Node* temp = top;
 			top = top->next;
 			delete temp;
-			--size;
+			--counter;
 			return topValue;
 		}
 		else
 		{
-			throw runtime_error("Stack is empty");
+			throw out_of_range("Stack is empty");
 		}
 	}
+
+	/// <summary>
+	/// ћетод peek возвращает значение элемента, наход€щегос€ на вершине.
+	/// The peek method returns the value of the element located at the top
+	/// </summary>
+	/// <returns></returns>
 
 	T peek()
 	{
@@ -84,14 +91,25 @@ public:
 		}
 		else
 		{
-			throw runtime_error("Stack is empty");
+			throw out_of_range("Stack is empty");
 		}
 	}
 
+	/// <summary>
+	/// ћетод count возвращает количество элементов стека.
+	/// The count method returns the number of stack elements
+	/// </summary>
+	/// <returns></returns>
+
 	int count()
 	{
-		return size;
+		return counter;
 	}
+
+	/// <summary>
+	/// ћетод clear очищает стек и примен€етс€ в деструкторе.
+	/// The clear method clears the stack and is applied in the destructor.
+	/// </summary>
 
 	void clear()
 	{
@@ -101,6 +119,6 @@ public:
 			top = top->next;
 			delete temp;
 		}
-		size = 0;
+		counter = 0;
 	}
 };
