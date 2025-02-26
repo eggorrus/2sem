@@ -1,7 +1,6 @@
 #pragma once
 
 #include <stdexcept>
-#include <string>
 
 using namespace std;
 
@@ -20,7 +19,8 @@ private:
 		T data;
 		Node* next;
 
-		Node(const T& value) : data(value), next(nullptr) {} //создан конструктор структуры Node - created constructor of struct Node
+		Node(const T& value) : data(value), next(nullptr) {} 
+		//создан конструктор структуры Node - created constructor of struct Node
 	};
 
 	int counter;
