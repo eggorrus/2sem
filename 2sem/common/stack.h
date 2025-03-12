@@ -5,12 +5,10 @@
 using namespace std;
 
 /// <summary>
-/// Ниже находится описание класса "Stack", который является системой хранения данных типа "LIFO"
+/// РќРёР¶Рµ РЅР°С…РѕРґРёС‚СЃСЏ РѕРїРёСЃР°РЅРёРµ РєР»Р°СЃСЃР° "Stack", РєРѕС‚РѕСЂС‹Р№ СЏРІР»СЏРµС‚СЃСЏ СЃРёСЃС‚РµРјРѕР№ С…СЂР°РЅРµРЅРёСЏ РґР°РЅРЅС‹С… С‚РёРїР° "LIFO"
 /// Description of class "Stack" which is data storage "LIFO" system is below.
 /// </summary>
-
 template <typename T>
-
 class Stack
 {
 private:
@@ -19,8 +17,8 @@ private:
 		T data;
 		Node* next;
 
+		//СЃРѕР·РґР°РЅ РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ СЃС‚СЂСѓРєС‚СѓСЂС‹ Node - created constructor of struct Node
 		Node(const T& value) : data(value), next(nullptr) {} 
-		//создан конструктор структуры Node - created constructor of struct Node
 	};
 
 	int counter;
@@ -28,12 +26,12 @@ private:
 
 public:
 	/// <summary>
-	/// Конструктор для структуры Stack
+	/// РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РґР»СЏ СЃС‚СЂСѓРєС‚СѓСЂС‹ Stack
 	/// Constructor for Stack structure
 	/// </summary>
 	Stack() : counter(0), top(nullptr) {}
 	/// <summary>
-	/// Здесь представлен деструктор.
+	/// Р—РґРµСЃСЊ РїСЂРµРґСЃС‚Р°РІР»РµРЅ РґРµСЃС‚СЂСѓРєС‚РѕСЂ.
 	/// Here is destructor
 	/// </summary>
 	~Stack()
@@ -41,11 +39,11 @@ public:
 		clear();
 	}
 	/// <summary>
-	/// Ниже представлен метод push. Он добавляет элемент на вершину стека.
+	/// РќРёР¶Рµ РїСЂРµРґСЃС‚Р°РІР»РµРЅ РјРµС‚РѕРґ push. РћРЅ РґРѕР±Р°РІР»СЏРµС‚ СЌР»РµРјРµРЅС‚ РЅР° РІРµСЂС€РёРЅСѓ СЃС‚РµРєР°.
 	/// Method push is below. It adds an element on top of the Stack.
 	/// </summary>
 	/// <param name="value"></param>
-	void push(const T& value)
+	void push (T value)
 	{
 		Node* newData = new Node(value);
 		newData->data = value;
@@ -55,11 +53,10 @@ public:
 	}
 
 	/// <summary>
-	/// Далее представлен метод pop. Он извлекает и возвращает значение с вершины стека.
+	/// Р”Р°Р»РµРµ РїСЂРµРґСЃС‚Р°РІР»РµРЅ РјРµС‚РѕРґ pop. РћРЅ РёР·РІР»РµРєР°РµС‚ Рё РІРѕР·РІСЂР°С‰Р°РµС‚ Р·РЅР°С‡РµРЅРёРµ СЃ РІРµСЂС€РёРЅС‹ СЃС‚РµРєР°.
 	/// The following is the pop method. It extracts and returns a value from the top of the stack.
 	/// </summary>
 	/// <returns></returns>
-
 	T pop()
 	{
 		if (top != nullptr)
@@ -78,11 +75,10 @@ public:
 	}
 
 	/// <summary>
-	/// Метод peek возвращает значение элемента, находящегося на вершине.
+	/// РњРµС‚РѕРґ peek РІРѕР·РІСЂР°С‰Р°РµС‚ Р·РЅР°С‡РµРЅРёРµ СЌР»РµРјРµРЅС‚Р°, РЅР°С…РѕРґСЏС‰РµРіРѕСЃСЏ РЅР° РІРµСЂС€РёРЅРµ.
 	/// The peek method returns the value of the element located at the top
 	/// </summary>
 	/// <returns></returns>
-
 	T peek()
 	{
 		if (top != nullptr)
@@ -96,21 +92,19 @@ public:
 	}
 
 	/// <summary>
-	/// Метод count возвращает количество элементов стека.
+	/// РњРµС‚РѕРґ count РІРѕР·РІСЂР°С‰Р°РµС‚ РєРѕР»РёС‡РµСЃС‚РІРѕ СЌР»РµРјРµРЅС‚РѕРІ СЃС‚РµРєР°.
 	/// The count method returns the number of stack elements
 	/// </summary>
 	/// <returns></returns>
-
 	int count()
 	{
 		return counter;
 	}
 
 	/// <summary>
-	/// Метод clear очищает стек и применяется в деструкторе.
+	/// РњРµС‚РѕРґ clear РѕС‡РёС‰Р°РµС‚ СЃС‚РµРє Рё РїСЂРёРјРµРЅСЏРµС‚СЃСЏ РІ РґРµСЃС‚СЂСѓРєС‚РѕСЂРµ.
 	/// The clear method clears the stack and is applied in the destructor.
 	/// </summary>
-
 	void clear()
 	{
 		while (top != nullptr)
