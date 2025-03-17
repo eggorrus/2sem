@@ -10,13 +10,15 @@ int main()
 	Stack<int> myStack;
 	cout << "Введите числа" << endl;
 	cin >> inputValue;
+
 	while (inputValue != 0)
 	{
 		myStack.push(inputValue);
 		cin >> inputValue;
 	}
+
 	cout << "Положительные числа в обратном порядке:" << endl;
-	while(myStack.count()>0)
+	while(myStack.count() > 0)
 	{
 		int currentValue = myStack.pop();
 		if (currentValue > 0)
