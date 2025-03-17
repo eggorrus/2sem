@@ -6,6 +6,7 @@ using namespace std;
 
 /// <summary>
 /// Ниже находится описание класса "Stack", который является системой хранения данных типа "LIFO"
+/// </summary>
 template <typename T>
 class Stack
 {
@@ -25,15 +26,20 @@ private:
 public:
 	/// <summary>
 	/// Конструктор для структуры Stack
+	/// /// </summary>
 	Stack() : counter(0), top(nullptr) {}
+
 	/// <summary>
 	/// Здесь представлен деструктор.
+	///  </summary>
 	~Stack()
 	{
 		clear();
 	}
+
 	/// <summary>
 	/// Ниже представлен метод push. Он добавляет элемент на вершину стека.
+	///  </summary>
 	void push (T value)
 	{
 		Node* newData = new Node(value);
@@ -44,6 +50,7 @@ public:
 
 	/// <summary>
 	/// Далее представлен метод pop. Он извлекает и возвращает значение с вершины стека.
+	/// </summary>
 	T pop()
 	{
 		if (top != nullptr)
@@ -63,6 +70,7 @@ public:
 
 	/// <summary>
 	/// Метод peek возвращает значение элемента, находящегося на вершине.
+	/// </summary>
 	T peek()
 	{
 		if (top != nullptr)
@@ -77,6 +85,7 @@ public:
 
 	/// <summary>
 	/// Метод count возвращает количество элементов стека.
+	/// </summary>
 	int count()
 	{
 		return counter;
@@ -84,6 +93,7 @@ public:
 
 	/// <summary>
 	/// Метод clear очищает стек и применяется в деструкторе.
+	/// </summary>
 	void clear()
 	{
 		while (top != nullptr)
