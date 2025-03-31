@@ -2,8 +2,6 @@
 
 #include <stdexcept>
 
-using namespace std;
-
 /// <summary>
 /// Ниже находится описание класса "Stack", который является системой хранения данных типа "LIFO"
 /// </summary>

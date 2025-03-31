@@ -1,20 +1,118 @@
-﻿// lab2.cpp : Этот файл содержит функцию "main". Здесь начинается и заканчивается выполнение программы.
-//
+﻿#include <iostream>
+#include <queue.h>
 
-#include <iostream>
+using namespace std;
+
+void showMenu()
+{
+	cout << "Выберите команду:\n 1 - вставка перед каждым отрицательным элементом очереди элемента со значением 1\n";
+	cout << " 2 - удаление из очереди всех отрицательных элементов\n 3 - Подсчет количества вхождений элемента в очередь";
+	cout << " 4 - Вывод текущего состояния очереди\n 0 - конец работы программы";
+}
 
 int main()
 {
-    std::cout << "Hello World!\n";
+	setlocale(LC_ALL, "");
+	cout << "Введите элементы очереди (признак окончания последовательности - 0)" << endl;
+	Queue<int> queue;
+	int inputValue;
+	cin >> inputValue;
+	while (inputValue != 0)
+	{
+		queue.queue(inputValue);
+		cin >> inputValue;
+	}
+	int command;
+	showMenu();
+	cin >> command;
+	while (command != 0)
+	{
+		switch (command)
+		{
+		case 1:
+		{
+			int size = queue.count();
+			for (int i = 0; i < size; i++)
+			{
+				int value = queue.unqueue();
+				if (value < 0)
+				{
+					queue.queue(1);
+				}
+				queue.queue(value);
+			}
+			break;
+		}
+
+		case 2:
+		{
+			int size = queue.count();
+			int value;
+			for (int i = 0; i < size; i++)
+			{
+				value = queue.unqueue();
+				if (value > 0)
+				{
+					queue.queue(value);
+				}
+			}
+			break;
+		}
+
+		case 3:
+		{
+			int size = queue.count();
+			int counter = 0;
+			int target;
+			cout << "Введите элемент" << endl;
+			cin >> target;
+			for (int i = 0; i < size; i++)
+			{
+				int temp = queue.unqueue();
+				if (temp == target)
+				{
+					counter++;
+				}
+				queue.queue(temp);
+			}
+			cout << "Элемент " << target << " встречается " << counter << " раз." << endl;
+			break;
+		}
+
+		case 4:
+		{
+			int size = queue.count();
+			if (size == 0)
+			{
+				cout << "Очередь пуста\n";
+			}
+			else
+			{
+				cout << "Текущая очередь: ";
+				for (int i = 0; i < size; i++)
+				{
+					int value = queue.unqueue();
+					if (i != size - 1)
+					{
+						cout << value << " ";
+					}
+					else
+					{
+						cout << value << endl;
+					}
+					queue.queue(value);
+				}
+			}
+			break;
+		}
+
+		default:
+		{
+			cout << "Неверная команда!\n";
+			break;
+		}
+		}
+		showMenu();
+		cin >> command;
+	}
 }
-
-// Запуск программы: CTRL+F5 или меню "Отладка" > "Запуск без отладки"
-// Отладка программы: F5 или меню "Отладка" > "Запустить отладку"
-
-// Советы по началу работы 
-//   1. В окне обозревателя решений можно добавлять файлы и управлять ими.
-//   2. В окне Team Explorer можно подключиться к системе управления версиями.
-//   3. В окне "Выходные данные" можно просматривать выходные данные сборки и другие сообщения.
-//   4. В окне "Список ошибок" можно просматривать ошибки.
-//   5. Последовательно выберите пункты меню "Проект" > "Добавить новый элемент", чтобы создать файлы кода, или "Проект" > "Добавить существующий элемент", чтобы добавить в проект существующие файлы кода.
-//   6. Чтобы снова открыть этот проект позже, выберите пункты меню "Файл" > "Открыть" > "Проект" и выберите SLN-файл.
