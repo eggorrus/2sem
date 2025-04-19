@@ -3,7 +3,7 @@
 #include <stdexcept>
 
 /// <summary>
-/// Класс Queue, система хранения данных FIFO.
+/// Класс Queue, метод организации данных FIFO.
 /// </summary>
 template <typename T>
 class Queue
@@ -18,14 +18,14 @@ private:
 	};
 
 	Node* top;
-	Node* bot;
+	Node* bottom;
 	int counter;
 
 public:
 	/// <summary>
 	/// Конструктор класса Queue
 	/// </summary>
-	Queue() : top(nullptr), bot(nullptr), counter(0) {}
+	Queue() : top(nullptr), bottom(nullptr), counter(0) {}
 
 	/// <summary>
 	/// Деструткор класса Queue
@@ -42,15 +42,14 @@ public:
 	void queue(T value)
 	{
 		Node* newData = new Node(value);
-		if (bot != nullptr)
+		if (bottom != nullptr)
 		{
-			bot->next = newData;
-			bot = newData;
+			bottom->next = newData;
+			bottom = newData;
 		}
 		else
 		{
-			top = newData;
-			bot = newData;
+			top = bottom = newData;
 		}
 		counter++;
 	}
