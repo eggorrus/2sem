@@ -1,6 +1,7 @@
 #pragma once
 
 #include <stdexcept>
+#include <Node.h>
 
 /// <summary>
 /// Класс Queue, метод организации данных FIFO.
@@ -9,16 +10,9 @@ template <typename T>
 class Queue
 {
 private:
-	struct Node
-	{
-		T data;
-		Node* next;
 
-		Node(const T& value) : data(value), next(nullptr) {}
-	};
-
-	Node* top;
-	Node* bottom;
+	Node<T>* top;
+	Node<T>* bottom;
 	int counter;
 
 public:
@@ -41,7 +35,7 @@ public:
 	/// <param name="value">Значение которое нужно поместить в очередь</param>
 	void queue(T value)
 	{
-		Node* newData = new Node(value);
+		Node<T>* newData = new Node<T>(value);
 		if (bottom != nullptr)
 		{
 			bottom->next = newData;
@@ -59,19 +53,16 @@ public:
 	/// </summary>
 	T unqueue()
 	{
-		if (top != nullptr)
-		{
-			T outValue = top->data;
-			Node* temp = top;
-			top = top->next;
-			delete temp;
-			--counter;
-			return outValue;
-		}
-		else
+		if (top == nullptr || counter <= 0)  
 		{
 			throw std::out_of_range("Queue is empty");
 		}
+		T outValue = top->data;
+		Node<T>* temp = top;
+		top = top->next;
+		delete temp;
+		--counter;
+		return outValue;
 	}
 
 	/// <summary>
@@ -89,7 +80,7 @@ public:
 	{
 		while (top != nullptr)
 		{
-			Node* temp = top;
+			Node<T>* temp = top;
 			top = top->next;
 			delete temp;
 		}

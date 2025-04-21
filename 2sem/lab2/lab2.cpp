@@ -21,25 +21,6 @@ void inputElement()
 	queue.queue(inputValue);
 }
 
-int removeElement()
-{
-	int element;
-	element = queue.unqueue();
-	return element;
-}
-
-void inputQueue()
-{
-	cout << "Введите элементы очереди (признак окончания последовательности - 0)" << endl;
-	int inputValue;
-	cin >> inputValue;
-	while (inputValue != 0)
-	{
-		queue.queue(inputValue);
-		cin >> inputValue;
-	}
-}
-
 void insertOneBeforeNegatives()
 {
 	int size = queue.count();
@@ -68,13 +49,10 @@ void removeNegatives()
 	}
 }
 
-void countNumberOfEntries()
+int countNumberOfEntries(int target)
 {
 	int size = queue.count();
 	int counter = 0;
-	int target;
-	cout << "Введите элемент" << endl;
-	cin >> target;
 	for (int i = 0; i < size; i++)
 	{
 		int temp = queue.unqueue();
@@ -84,7 +62,7 @@ void countNumberOfEntries()
 		}
 		queue.queue(temp);
 	}
-	cout << "Элемент " << target << " встречается " << counter << " раз(a)." << endl;
+	return counter;
 }
 
 void showQueue()
@@ -116,7 +94,6 @@ void showQueue()
 int main()
 {
 	setlocale(LC_ALL, "");
-	//inputQueue();
 	int command;
 	showMenu();
 	cin >> command;
@@ -138,7 +115,10 @@ int main()
 
 		case 3:
 		{
-			countNumberOfEntries();
+			int target;
+			cout << "Введите элемент" << endl;
+			cin >> target;
+			cout << "Элемент " << target << "встречается " << countNumberOfEntries(target) << "раз(а)" << endl;
 			break;
 		}
 
@@ -152,7 +132,7 @@ int main()
 		{
 			if (queue.count() > 0)
 			{
-				cout << "Первый элемент в очереди: " << removeElement() << endl;
+				cout << "Первый элемент в очереди: " << queue.unqueue() << endl;
 			}
 
 			else
