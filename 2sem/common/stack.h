@@ -1,6 +1,7 @@
 #pragma once
 
 #include <stdexcept>
+#include <Node.h>
 
 /// <summary>
 /// Ниже находится описание класса "Stack", который является системой хранения данных типа "LIFO"
@@ -9,17 +10,8 @@ template <typename T>
 class Stack
 {
 private:
-	struct Node
-	{
-		T data;
-		Node* next;
-
-		//создан конструктор структуры Node 
-		Node(const T& value) : data(value), next(nullptr) {} 
-	};
-
 	int counter;
-	Node* top;
+	Node<T>* top;
 
 public:
 	/// <summary>
@@ -40,7 +32,7 @@ public:
 	///  </summary>
 	void push (T value)
 	{
-		Node* newData = new Node(value);
+		Node<T>* newData = new Node(value);
 		newData->next = top;
 		top = newData;
 		++counter;
@@ -54,7 +46,7 @@ public:
 		if (top != nullptr)
 		{
 			T topValue = top->data;
-			Node* temp = top;
+			Node<T>* temp = top;
 			top = top->next;
 			delete temp;
 			--counter;
@@ -96,7 +88,7 @@ public:
 	{
 		while (top != nullptr)
 		{
-			Node* temp = top;
+			Node<T>* temp = top;
 			top = top->next;
 			delete temp;
 		}
