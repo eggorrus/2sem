@@ -26,7 +26,10 @@ public:
 	/// </summary>
 	~Queue()
 	{
-		clear();
+		if (counter > 0)
+		{
+			clear();
+		}
 	}
 
 	/// <summary>
@@ -60,6 +63,10 @@ public:
 		T outValue = top->data;
 		Node<T>* temp = top;
 		top = top->next;
+		if (top == nullptr)
+		{
+			bottom = nullptr;
+		}
 		delete temp;
 		--counter;
 		return outValue;
@@ -85,5 +92,6 @@ public:
 			delete temp;
 		}
 		counter = 0;
+		bottom = nullptr;
 	}
 };

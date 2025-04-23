@@ -68,7 +68,7 @@ int countNumberOfEntries(int target)
 void showQueue()
 {
 	int size = queue.count();
-	if (size == 0)
+	if (queue.count() == 0)
 	{
 		cout << "Очередь пуста\n";
 	}
@@ -99,65 +99,74 @@ int main()
 	cin >> command;
 	while (command != 0)
 	{
-		switch (command)
+		try
 		{
-		case 1:
-		{
-			insertOneBeforeNegatives();
-			break;
-		}
-
-		case 2:
-		{
-			removeNegatives();
-			break;
-		}
-
-		case 3:
-		{
-			int target;
-			cout << "Введите элемент" << endl;
-			cin >> target;
-			cout << "Элемент " << target << "встречается " << countNumberOfEntries(target) << "раз(а)" << endl;
-			break;
-		}
-
-		case 4:
-		{
-			inputElement();
-			break;
-		}
-
-		case 5:
-		{
-			if (queue.count() > 0)
+			switch (command)
 			{
-				cout << "Первый элемент в очереди: " << queue.unqueue() << endl;
+			case 1:
+			{
+				insertOneBeforeNegatives();
+				break;
 			}
 
-			else
+			case 2:
 			{
-				cout << "Очередь пуста\n";
+				removeNegatives();
+				break;
 			}
-			break;
-		}
 
-		case 6:
-		{
-			cout << "Текущее количество элементов в очереди: " << queue.count() << endl;
-		}
+			case 3:
+			{
+				int target;
+				cout << "Введите элемент" << endl;
+				cin >> target;
+				cout << "Элемент " << target << "встречается " << countNumberOfEntries(target) << "раз(а)" << endl;
+				break;
+			}
 
-		case 7:
-		{
-			showQueue();
-			break;
-		}
+			case 4:
+			{
+				inputElement();
+				break;
+			}
 
-		default:
-		{
-			cout << "Неверная команда!\n";
-			break;
+			case 5:
+			{
+				if (queue.count() > 0)
+				{
+					cout << "Первый элемент в очереди: " << queue.unqueue() << endl;
+				}
+
+				else
+				{
+					cout << "Очередь пуста\n";
+				}
+				break;
+			}
+
+			case 6:
+			{
+				cout << "Текущее количество элементов в очереди: " << queue.count() << endl;
+				break;
+			}
+
+			case 7:
+			{
+				showQueue();
+				break;
+			}
+
+			default:
+			{
+				cout << "Неверная команда!\n";
+				break;
+			}
+			}
 		}
+		catch(const std::exception& error)
+		{
+			cout << "" << error.what() << endl;
+			queue.clear();
 		}
 		showMenu();
 		cin >> command;
