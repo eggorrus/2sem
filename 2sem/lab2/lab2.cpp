@@ -1,20 +1,174 @@
-﻿// lab2.cpp : Этот файл содержит функцию "main". Здесь начинается и заканчивается выполнение программы.
-//
+﻿#include <iostream>
+#include <queue.h>
 
-#include <iostream>
+using namespace std;
+
+Queue<int> queue;
+
+void showMenu()
+{
+	cout << "Выберите команду:\n 1 - вставка перед каждым отрицательным элементом очереди элемента со значением 1\n";
+	cout << " 2 - удаление из очереди всех отрицательных элементов\n 3 - Подсчет количества вхождений элемента в очередь\n";
+	cout << " 4 - Добавить элемент в очередь\n 5 - Извлечь из очереди первый элемент\n 6 - Возврат количества элементов в очереди\n";
+	cout << " 7 - Вывод текущего состояния очереди\n 0 - конец работы программы ";
+}
+
+void inputElement()
+{
+	int inputValue;
+	cout << "Введите элемент очереди" << endl;
+	cin >> inputValue;
+	queue.queue(inputValue);
+}
+
+void insertOneBeforeNegatives()
+{
+	int size = queue.count();
+	for (int i = 0; i < size; i++)
+	{
+		int value = queue.unqueue();
+		if (value < 0)
+		{
+			queue.queue(1);
+		}
+		queue.queue(value);
+	}
+}
+
+void removeNegatives()
+{
+	int size = queue.count();
+	int value;
+	for (int i = 0; i < size; i++)
+	{
+		value = queue.unqueue();
+		if (value > 0)
+		{
+			queue.queue(value);
+		}
+	}
+}
+
+int countNumberOfEntries(int target)
+{
+	int size = queue.count();
+	int counter = 0;
+	for (int i = 0; i < size; i++)
+	{
+		int temp = queue.unqueue();
+		if (temp == target)
+		{
+			counter++;
+		}
+		queue.queue(temp);
+	}
+	return counter;
+}
+
+void showQueue()
+{
+	int size = queue.count();
+	if (queue.count() == 0)
+	{
+		cout << "Очередь пуста\n";
+	}
+	else
+	{
+		cout << "Текущая очередь: ";
+		for (int i = 0; i < size; i++)
+		{
+			int value = queue.unqueue();
+			if (i != size - 1)
+			{
+				cout << value << " ";
+			}
+			else
+			{
+				cout << value << endl;
+			}
+			queue.queue(value);
+		}
+	}
+}
 
 int main()
 {
-    std::cout << "Hello World!\n";
+	setlocale(LC_ALL, "");
+	int command;
+	showMenu();
+	cin >> command;
+	while (command != 0)
+	{
+		try
+		{
+			switch (command)
+			{
+			case 1:
+			{
+				insertOneBeforeNegatives();
+				break;
+			}
+
+			case 2:
+			{
+				removeNegatives();
+				break;
+			}
+
+			case 3:
+			{
+				int target;
+				cout << "Введите элемент" << endl;
+				cin >> target;
+				cout << "Элемент " << target << "встречается " << countNumberOfEntries(target) << "раз(а)" << endl;
+				break;
+			}
+
+			case 4:
+			{
+				inputElement();
+				break;
+			}
+
+			case 5:
+			{
+				if (queue.count() > 0)
+				{
+					cout << "Первый элемент в очереди: " << queue.unqueue() << endl;
+				}
+
+				else
+				{
+					cout << "Очередь пуста\n";
+				}
+				break;
+			}
+
+			case 6:
+			{
+				cout << "Текущее количество элементов в очереди: " << queue.count() << endl;
+				break;
+			}
+
+			case 7:
+			{
+				showQueue();
+				break;
+			}
+
+			default:
+			{
+				cout << "Неверная команда!\n";
+				break;
+			}
+			}
+		}
+		catch(const std::exception& error)
+		{
+			cout << "" << error.what() << endl;
+			queue.clear();
+		}
+		showMenu();
+		cin >> command;
+	}
 }
-
-// Запуск программы: CTRL+F5 или меню "Отладка" > "Запуск без отладки"
-// Отладка программы: F5 или меню "Отладка" > "Запустить отладку"
-
-// Советы по началу работы 
-//   1. В окне обозревателя решений можно добавлять файлы и управлять ими.
-//   2. В окне Team Explorer можно подключиться к системе управления версиями.
-//   3. В окне "Выходные данные" можно просматривать выходные данные сборки и другие сообщения.
-//   4. В окне "Список ошибок" можно просматривать ошибки.
-//   5. Последовательно выберите пункты меню "Проект" > "Добавить новый элемент", чтобы создать файлы кода, или "Проект" > "Добавить существующий элемент", чтобы добавить в проект существующие файлы кода.
-//   6. Чтобы снова открыть этот проект позже, выберите пункты меню "Файл" > "Открыть" > "Проект" и выберите SLN-файл.
