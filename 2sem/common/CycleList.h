@@ -29,13 +29,23 @@ private:
 	}
 
 public:
+	/// <summary>
+	/// Конструктор класса CycleList
+	/// </summary>
 	CycleList() : beginning(nullptr), end(nullptr), counter(0) {}
 
+	/// <summary>
+	/// Деструктор класса CycleList
+	/// </summary>
 	~CycleList()
 	{
 		clear();
 	}
 
+	/// <summary>
+	/// Добавление в список элемента (с конца)
+	/// </summary>
+	/// <param name="element"> Добавляемое значение </param>
 	void add(T element)
 	{
 		Node<T>* newNode = new Node<T>(element);
@@ -52,6 +62,11 @@ public:
 		counter++;
 	}
 
+	/// <summary>
+	/// Функция добавления в список элемента по номеру места
+	/// </summary>
+	/// <param name="index"> Номер по порядку (начиная с нуля) места, на которое нужно вставить элемент </param>
+	/// <param name="element"> Элемент, который необходимо вставить в список </param>
 	void insert(int index, T element)
 	{
 		Node<T>* newNode = new Node<T>(element);
@@ -82,6 +97,10 @@ public:
 		counter++;
 	}
 
+	/// <summary>
+	/// Функция удаления элемента по номеру
+	/// </summary>
+	/// <param name="index"> Номер удаляемого элемента из списка </param>
 	void removeAt(int index) 
 	{
 		if (index < 0 || index >= counter)
@@ -112,16 +131,28 @@ public:
 		counter--;
 	}
 
+	/// <summary>
+	/// Оператор, позволяющий обращаться к элементам списка как к элементам массива: []
+	/// </summary>
+	/// <param name="index"> Номер элемента списка</param>
+	/// <returns> Элемент, идущий по этому номеру </returns>
 	T& operator[](const int index)
 	{
 		return getNode(index)->data;
 	}
 
+	/// <summary>
+	/// Подсчет количества элементов входящих в список
+	/// </summary>
 	int count()
 	{
 		return counter;
 	}
 
+	/// <summary>
+	/// Подсчет, сколько раз заданное число входит в список
+	/// </summary>
+	/// <param name="value"> Элемент, по которому ведется поиск в списке </param>
 	int count(T& value)
 	{
 		int count = 0;
@@ -137,11 +168,18 @@ public:
 		return count;
 	}
 
+	/// <summary>
+	/// Позволяет обращаться к началу списка
+	/// </summary>
+	/// <returns> Указатель на первый элемент списка </returns>
 	Node<T>* returnBeginning()
 	{
 		return beginning;
 	}
 
+	/// <summary>
+	/// Функция очистки списка, используемая в деструкторе
+	/// </summary>
 	void clear()
 	{
 		while (beginning != nullptr)
