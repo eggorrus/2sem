@@ -15,7 +15,7 @@ private:
 	{
 		if (index < 0 || index >= counter)
 		{
-			throw std::out_of_range("Invalid index")
+			throw std::out_of_range("Invalid index");
 		}
 		else
 		{
@@ -57,7 +57,7 @@ public:
 		Node<T>* newNode = new Node<T>(element);
 		if(index < 0 || index > counter)
 		{
-			throw std::out_of_range("Invalid index")
+			throw std::out_of_range("Invalid index");
 		}
 		else if (index == 0)
 		{
@@ -130,19 +130,24 @@ public:
 		{
 			if (current->data == value)
 			{
-				count++
+				count++;
 			}
 			current = current->next;
 		}
 		return count;
 	}
 
+	Node<T>* returnBeginning()
+	{
+		return beginning;
+	}
+
 	void clear()
 	{
-		while (top != nullptr)
+		while (beginning != nullptr)
 		{
-			Node<T>* temp = top;
-			top = top->next;
+			Node<T>* temp = beginning;
+			beginning = beginning->next;
 			delete temp;
 		}
 		counter = 0;
