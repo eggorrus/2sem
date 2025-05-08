@@ -120,7 +120,7 @@ int main()
 
 			case 5:
 			{
-				cout << "В списке " << list.count() << " элементов" << endl;
+				cout << "В списке " << list.count() << " элементов\n" << endl;
 				break;
 			}
 

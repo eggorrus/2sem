@@ -153,7 +153,7 @@ public:
 	/// Подсчет, сколько раз заданное число входит в список
 	/// </summary>
 	/// <param name="value"> Элемент, по которому ведется поиск в списке </param>
-	int count(T& value)
+	int count(T value)
 	{
 		int count = 0;
 		Node<T>* current = beginning;
