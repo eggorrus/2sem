@@ -11,30 +11,28 @@ void showMenu()
 	cout << " 9-Вывод текущего состояния списка\n 0-конец работы программы\n";
 }
 
-void insertOneBeforeNegatives(CycleList<int>* list, int sizeOfList)
+void insertOneBeforeNegatives(CycleList<int>* list)
 {
 	Node<int>* current = list->returnBeginning();
-	for (int i = 0; i < sizeOfList; i++)
+	for (int i = 0; i < list->count(); i++)
 	{
 		if (current->data < 0)
 		{
 			list->insert(i, 1);
-			sizeOfList++;
 			i++;
 		}
 		current = current->next;
 	}
 }
 
-void removeNegatives(CycleList<int>* list, int sizeOfList)
+void removeNegatives(CycleList<int>* list)
 {
 	Node<int>* current = list->returnBeginning();
-	for (int i = 0; i < sizeOfList; i++)
+	for (int i = 0; i < list->count(); i++)
 	{
 		if (current->data < 0)
 		{
 			list->removeAt(i);
-			sizeOfList--;
 			i--;
 		}
 		current = current->next;
@@ -45,7 +43,7 @@ void outputList(CycleList<int>* list)
 {
 	int sizeOfList = list->count();
 	Node<int>* current = list->returnBeginning();
-	for (int i = 0; i < sizeOfList; i++)
+	for (int i = 0; i < list->count(); i++)
 	{
 		if (i != sizeOfList - 1)
 		{
@@ -136,13 +134,13 @@ int main()
 			case 7:
 			{
 				
-				insertOneBeforeNegatives(&list, list.count());
+				insertOneBeforeNegatives(&list);
 				break;
 			}
 
 			case 8:
 			{
-				removeNegatives(&list, list.count());
+				removeNegatives(&list);
 				break;
 			}
 

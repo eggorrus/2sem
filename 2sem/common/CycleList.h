@@ -7,7 +7,6 @@ template <typename T>
 class CycleList
 {
 private:
-	Node<T>* beginning;
 	Node<T>* end;
 	int counter;
 
@@ -19,7 +18,7 @@ private:
 		}
 		else
 		{
-			Node<T>* current = beginning;
+			Node<T>* current = end->next;
 			for (int i = 0; i < index; i++)
 			{
 				current = current->next;
@@ -32,7 +31,7 @@ public:
 	/// <summary>
 	/// Конструктор класса CycleList
 	/// </summary>
-	CycleList() : beginning(nullptr), end(nullptr), counter(0) {}
+	CycleList() : end(nullptr), counter(0) {}
 
 	/// <summary>
 	/// Деструктор класса CycleList
@@ -49,13 +48,14 @@ public:
 	void add(T element)
 	{
 		Node<T>* newNode = new Node<T>(element);
-		if (beginning == nullptr)
+		if (end == nullptr)
 		{
-			beginning = newNode;
 			end = newNode;
+			newNode->next = end;
 		}
 		else
 		{
+			newNode->next = end->next;
 			end->next = newNode;
 			end = newNode;
 		}
@@ -69,15 +69,15 @@ public:
 	/// <param name="element"> Элемент, который необходимо вставить в список </param>
 	void insert(int index, T element)
 	{
-		Node<T>* newNode = new Node<T>(element);
 		if(index < 0 || index > counter)
 		{
 			throw std::out_of_range("Invalid index");
 		}
-		else if (index == 0)
+		Node<T>* newNode = new Node<T>(element);
+		if (index == 0)
 		{
-			newNode->next = beginning;
-			beginning = newNode;
+			newNode->next = end->next;
+			end->next = newNode;
 			if (end == nullptr)
 			{
 				end = newNode;
@@ -85,8 +85,7 @@ public:
 		}
 		else if (index == counter)
 		{
-			end->next = newNode;
-			end = newNode;
+			add(element);
 		}
 		else
 		{
@@ -110,11 +109,14 @@ public:
 		Node<T>* toDelete;
 		if (index == 0)
 		{  
-			toDelete = beginning;
-			beginning = beginning->next;
+			toDelete = end->next;
 			if (counter == 1)
 			{  
 				end = nullptr;
+			}
+			else
+			{
+				end->next = toDelete->next;
 			}
 		}
 		else
@@ -155,8 +157,13 @@ public:
 	/// <param name="value"> Элемент, по которому ведется поиск в списке </param>
 	int count(T value)
 	{
+		if (end == nullptr)
+		{
+			return 0;
+		}
+
 		int count = 0;
-		Node<T>* current = beginning;
+		Node<T>* current = end->next;
 		for (int i = 0; i < counter; i++)
 		{
 			if (current->data == value)
@@ -174,7 +181,7 @@ public:
 	/// <returns> Указатель на первый элемент списка </returns>
 	Node<T>* returnBeginning()
 	{
-		return beginning;
+		return end->next;
 	}
 
 	/// <summary>
@@ -182,13 +189,20 @@ public:
 	/// </summary>
 	void clear()
 	{
-		while (beginning != nullptr)
+		if (end == nullptr)
 		{
-			Node<T>* temp = beginning;
-			beginning = beginning->next;
-			delete temp;
+			return;
 		}
+
+		Node<T>* current = end->next;
+		end->next = nullptr;
+		while (current != nullptr)
+		{
+			Node<T>* toDelete = current;
+			current = current->next;
+			delete toDelete;
+		}
+		end = nullptr;
 		counter = 0;
-		delete end;
 	}
 };
