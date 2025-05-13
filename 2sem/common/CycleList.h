@@ -74,18 +74,26 @@ public:
 			throw std::out_of_range("Invalid index");
 		}
 		Node<T>* newNode = new Node<T>(element);
-		if (index == 0)
+		if (counter == 0)
+		{
+			if (index != 0)
+			{
+				delete newNode;
+				throw std::out_of_range("Invalid index for empty list");
+			}
+			end = newNode;
+			end->next = end;
+		}
+		else if (index == 0)
 		{
 			newNode->next = end->next;
 			end->next = newNode;
-			if (end == nullptr)
-			{
-				end = newNode;
-			}
 		}
 		else if (index == counter)
 		{
-			add(element);
+			newNode->next = end->next;
+			end->next = newNode;
+			end = newNode;
 		}
 		else
 		{
