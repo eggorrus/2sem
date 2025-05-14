@@ -13,47 +13,41 @@ void showMenu()
 
 void insertOneBeforeNegatives(CycleList<int>* list)
 {
-	Node<int>* current = list->returnBeginning();
 	for (int i = 0; i < list->count(); i++)
 	{
-		if (current->data < 0)
+		if ((*list)[i] < 0)
 		{
 			list->insert(i, 1);
 			i++;
 		}
-		current = current->next;
 	}
 }
 
 void removeNegatives(CycleList<int>* list)
 {
-	Node<int>* current = list->returnBeginning();
 	for (int i = 0; i < list->count(); i++)
 	{
-		if (current->data < 0)
+		if ((*list)[i] < 0)
 		{
 			list->removeAt(i);
 			i--;
 		}
-		current = current->next;
 	}
 }
 
 void outputList(CycleList<int>* list)
 {
 	int sizeOfList = list->count();
-	Node<int>* current = list->returnBeginning();
 	for (int i = 0; i < list->count(); i++)
 	{
 		if (i != sizeOfList - 1)
 		{
-			cout << current->data << " ";
+			cout << (*list)[i] << " ";
 		}
 		else
 		{
-			cout << current->data << endl;
+			cout << (*list)[i] << "\n";
 		}
-		current = current->next;
 	}
 }
 
@@ -148,11 +142,13 @@ int main()
 			{
 				cout << "Текущее состояние списка:" << endl;
 				outputList(&list);
+				break;
 			}
 
 			default:
 			{
 				cout << "Неверная команда!" << endl;
+				break;
 			}
 			}
 		}

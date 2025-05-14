@@ -73,33 +73,24 @@ public:
 		{
 			throw std::out_of_range("Invalid index");
 		}
-		Node<T>* newNode = new Node<T>(element);
-		if (counter == 0)
+		if (index == counter)
 		{
-			if (index != 0)
-			{
-				delete newNode;
-				throw std::out_of_range("Invalid index for empty list");
-			}
-			end = newNode;
-			end->next = end;
-		}
-		else if (index == 0)
-		{
-			newNode->next = end->next;
-			end->next = newNode;
-		}
-		else if (index == counter)
-		{
-			newNode->next = end->next;
-			end->next = newNode;
-			end = newNode;
+			add(element);
 		}
 		else
 		{
-			Node<T>* previous = getNode(index - 1);
-			newNode->next = previous->next;
-			previous->next = newNode;
+			Node<T>* newNode = new Node<T>(element);
+			if (index == 0)
+			{
+				newNode->next = end->next;
+				end->next = newNode;
+			}
+			else
+			{
+				Node<T>* previous = getNode(index - 1);
+				newNode->next = previous->next;
+				previous->next = newNode;
+			}
 		}
 		counter++;
 	}
@@ -181,15 +172,6 @@ public:
 			current = current->next;
 		}
 		return count;
-	}
-
-	/// <summary>
-	/// Позволяет обращаться к началу списка
-	/// </summary>
-	/// <returns> Указатель на первый элемент списка </returns>
-	Node<T>* returnBeginning()
-	{
-		return end->next;
 	}
 
 	/// <summary>
