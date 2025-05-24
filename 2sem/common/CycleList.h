@@ -91,8 +91,8 @@ public:
 				newNode->next = previous->next;
 				previous->next = newNode;
 			}
+			counter++;
 		}
-		counter++;
 	}
 
 	/// <summary>
