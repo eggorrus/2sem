@@ -9,6 +9,8 @@ class CycleList
 private:
 	Node<T>* end;
 	int counter;
+	Node<T>* currentNode;
+	int currentCount;
 
 	Node<T>* getNode(int index)
 	{
@@ -16,22 +18,54 @@ private:
 		{
 			throw std::out_of_range("Invalid index");
 		}
-		else
+		if (currentNode == nullptr)
 		{
-			Node<T>* current = end->next;
-			for (int i = 0; i < index; i++)
-			{
-				current = current->next;
-			}
-			return current;
+			throw std::out_of_range("Empty list");
 		}
+		if (currentCount == index)
+		{
+			return currentNode;
+		}
+		if (index == counter - 1)
+		{
+			currentNode = end;
+			currentCount = index;
+		}
+		else if (index == 0) 
+		{
+			currentNode = end->next;
+			currentCount = 0;
+		}
+		else if (index == counter - 1)
+		{
+			currentNode = end;
+			currentCount = counter - 1;
+		}
+		else 
+		{
+			while (currentCount < index) 
+			{
+				currentNode = currentNode->next;
+				currentCount++;
+			}
+			while (currentCount > index) 
+			{
+				currentNode = currentNode->next; 
+				currentCount++;
+				if (currentCount >= counter) 
+				{
+					currentCount -= counter;
+				}
+			}
+		}
+		return currentNode;
 	}
 
 public:
 	/// <summary>
 	/// Конструктор класса CycleList
 	/// </summary>
-	CycleList() : end(nullptr), counter(0) {}
+	CycleList() : end(nullptr), counter(0), currentNode(nullptr), currentCount(0) {}
 
 	/// <summary>
 	/// Деструктор класса CycleList
@@ -39,6 +73,36 @@ public:
 	~CycleList()
 	{
 		clear();
+	}
+	
+	/// <summary>
+	/// Метод, позволяющий получить начало списка без использования [] оператора
+	/// </summary>
+	/// <returns>Начало списка</returns>
+	Node<T>* getHead() const
+	{
+		if (end == nullptr) return nullptr;
+		return end->next;
+	}
+
+	/// <summary>
+	/// Метод, позволяющий получить текущий элемент
+	/// </summary>
+	/// <returns>Текущий элемент</returns>
+	Node<T>* getCurrent() const 
+	{
+		return currentNode;
+	}
+
+	/// <summary>
+	/// Сбрасывает текущий элемент
+	/// </summary>
+	void resetCurrent() 
+	{
+		if (end != nullptr) {
+			currentNode = end->next;
+			currentCount = 0;
+		}
 	}
 
 	/// <summary>
@@ -59,7 +123,9 @@ public:
 			end->next = newNode;
 			end = newNode;
 		}
+		currentNode = newNode;
 		counter++;
+		currentCount = counter - 1;
 	}
 
 	/// <summary>
@@ -92,7 +158,9 @@ public:
 				previous->next = newNode;
 			}
 			counter++;
+			currentNode = newNode;
 		}
+		currentCount = index;
 	}
 
 	/// <summary>
@@ -112,10 +180,14 @@ public:
 			if (counter == 1)
 			{  
 				end = nullptr;
+				currentNode = nullptr;
+				currentCount = 0;
 			}
 			else
 			{
 				end->next = toDelete->next;
+				currentNode = end->next;
+				currentCount = 0;
 			}
 		}
 		else
@@ -126,6 +198,18 @@ public:
 			if (index == counter - 1) 
 			{  
 				end = previous;
+			}
+			if (currentCount >= index) 
+			{
+				currentCount--;
+			}
+			if (currentNode == toDelete) 
+			{
+				currentNode = toDelete->next;
+				if (currentNode == end->next && counter > 0)
+				{
+					currentCount = 0;
+				}
 			}
 		}
 		delete toDelete;
@@ -194,5 +278,7 @@ public:
 		}
 		end = nullptr;
 		counter = 0;
+		currentNode = nullptr;
+		currentCount = 0;
 	}
 };

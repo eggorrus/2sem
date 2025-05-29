@@ -1,5 +1,6 @@
 ﻿#include <iostream>
 #include <CycleList.h>
+#include <vector>
 
 using namespace std;
 
@@ -13,13 +14,24 @@ void showMenu()
 
 void insertOneBeforeNegatives(CycleList<int>* list)
 {
-	for (int i = 0; i < list->count(); i++)
+	vector<int> temp;
+	if (list->count() > 0) 
 	{
-		if ((*list)[i] < 0)
+		Node<int>* current = list->getHead();
+		do 
 		{
-			list->insert(i, 1);
-			i++;
+			temp.push_back(current->data);
+			current = current->next;
+		} while (current != list->getHead());
+	}
+	list->clear();
+	for (int value : temp) 
+	{
+		if (value < 0) 
+		{
+			list->add(1); 
 		}
+		list->add(value);
 	}
 }
 
