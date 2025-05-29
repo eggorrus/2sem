@@ -1,20 +1,175 @@
-﻿// lab3.cpp : Этот файл содержит функцию "main". Здесь начинается и заканчивается выполнение программы.
-//
+﻿#include <iostream>
+#include <CycleList.h>
+#include <vector>
 
-#include <iostream>
+using namespace std;
+
+void showMenu()
+{
+	cout << "Список команд:\n 1-Вставка элемента в конец списка; \n 2-Вставка элемента по заданному номеру \n";
+	cout << " 3-Удаление элемента по номеру \n 4-Вывод элемента по номеру \n 5-Подсчет количества элементов в очереди\n";
+	cout << " 6-Подсчет количества вхождений в очередь заданного элемента\n 7-Вставка перед всеми отрицтаельными элементами элемента со значением 1\n 8-Удаление из очереди всех отрицательных элементов\n";
+	cout << " 9-Вывод текущего состояния списка\n 0-конец работы программы\n";
+}
+
+void insertOneBeforeNegatives(CycleList<int>* list)
+{
+	vector<int> temp;
+	if (list->count() > 0) 
+	{
+		Node<int>* current = list->getHead();
+		do 
+		{
+			temp.push_back(current->data);
+			current = current->next;
+		} while (current != list->getHead());
+	}
+	list->clear();
+	for (int value : temp) 
+	{
+		if (value < 0) 
+		{
+			list->add(1); 
+		}
+		list->add(value);
+	}
+}
+
+void removeNegatives(CycleList<int>* list)
+{
+	for (int i = 0; i < list->count(); i++)
+	{
+		if ((*list)[i] < 0)
+		{
+			list->removeAt(i);
+			i--;
+		}
+	}
+}
+
+void outputList(CycleList<int>* list)
+{
+	int sizeOfList = list->count();
+	for (int i = 0; i < list->count(); i++)
+	{
+		if (i != sizeOfList - 1)
+		{
+			cout << (*list)[i] << " ";
+		}
+		else
+		{
+			cout << (*list)[i] << "\n";
+		}
+	}
+}
 
 int main()
 {
-    std::cout << "Hello World!\n";
+	setlocale(LC_ALL, "");
+	int command;
+	CycleList<int> list;
+	showMenu();
+	cin >> command;
+	while (command != 0)
+	{
+		try
+		{
+			switch (command)
+			{
+			case 1:
+			{
+				int inputValue;
+				cout << "Введите элемент" << endl;
+				cin >> inputValue;
+				list.add(inputValue);
+				break;
+			}
+
+			case 2:
+			{
+				int numberOfElement;
+				int inputValue;
+				cout << "Введите значение элемента" << endl;
+				cin >> inputValue;
+				cout << "Введите номер позиции, на которую его необходимо вставить (отсчет от нуля)" << endl;
+				cin >> numberOfElement;
+				list.insert(numberOfElement, inputValue);
+				break;
+			}
+
+			case 3:
+			{
+				int numberOfElement;
+				cout << "Введите номер элемента " << endl;
+				cin >> numberOfElement;
+				list.removeAt(numberOfElement);
+				break;
+			}
+
+			case 4:
+			{
+				int numberOfElement;
+				cout << "Введите номер элемента" << endl;
+				cin >> numberOfElement;
+				if (numberOfElement <= list.count() && numberOfElement>0)
+				{
+					cout << "Элемент #" << numberOfElement << ": " << list.operator[](numberOfElement) << endl;
+				}
+				else
+				{
+					cout << "Некорректный номер элемента!" << endl;
+				}
+				break;
+			}
+
+			case 5:
+			{
+				cout << "В списке " << list.count() << " элементов\n" << endl;
+				break;
+			}
+
+			case 6:
+			{
+				int element;
+				cout << "Введите элемент" << endl;
+				cin >> element;
+				cout << "Элемент " << element << " встречается столько раз:" << list.count(element);
+				break;
+			}
+
+			case 7:
+			{
+				
+				insertOneBeforeNegatives(&list);
+				break;
+			}
+
+			case 8:
+			{
+				removeNegatives(&list);
+				break;
+			}
+
+			case 9:
+			{
+				cout << "Текущее состояние списка:" << endl;
+				outputList(&list);
+				break;
+			}
+
+			default:
+			{
+				cout << "Неверная команда!" << endl;
+				break;
+			}
+			}
+		}
+		catch (const std::exception& error)
+		{
+			cout << error.what() << endl;
+			list.clear();
+		}
+		showMenu();
+		cin >> command;
+	}
 }
-
-// Запуск программы: CTRL+F5 или меню "Отладка" > "Запуск без отладки"
-// Отладка программы: F5 или меню "Отладка" > "Запустить отладку"
-
-// Советы по началу работы 
-//   1. В окне обозревателя решений можно добавлять файлы и управлять ими.
-//   2. В окне Team Explorer можно подключиться к системе управления версиями.
-//   3. В окне "Выходные данные" можно просматривать выходные данные сборки и другие сообщения.
-//   4. В окне "Список ошибок" можно просматривать ошибки.
-//   5. Последовательно выберите пункты меню "Проект" > "Добавить новый элемент", чтобы создать файлы кода, или "Проект" > "Добавить существующий элемент", чтобы добавить в проект существующие файлы кода.
-//   6. Чтобы снова открыть этот проект позже, выберите пункты меню "Файл" > "Открыть" > "Проект" и выберите SLN-файл.
