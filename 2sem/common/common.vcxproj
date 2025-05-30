@@ -136,6 +136,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CycleList.h" />
+    <ClInclude Include="dictionary.h" />
     <ClInclude Include="Node.h" />
     <ClInclude Include="queue.h" />
     <ClInclude Include="stack.h" />
