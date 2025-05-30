@@ -89,11 +89,11 @@ List<Region>* sortRegions(List<Сity>* list)
 	return regions;
 }
 
-void showRegions(List<Region>* regions)
+void showRegionsWithPopulation(List<Region>* regions)
 {
 	for (int i = 0; i < regions->count(); i++)
 	{
-		cout << "Население региона " << (*regions)[i].name << " составляет: " << (*regions)[i].population << endl;
+		cout << i+1 << ")" << (*regions)[i].name << " : население "  << (*regions)[i].population << endl;
 	}
 }
 
@@ -119,11 +119,54 @@ void showMenu()
 	cout << "Введите команду: ";
 }
 
+void regionChoiceMenu(List<Region>* regions)
+{
+	cout << "Список регионов:" << endl;
+	for (int i = 0; i < regions->count(); i++)
+	{
+		cout << i + 1 << ")" << (*regions)[i].name << endl;
+	}
+	cout << "Введите номер региона, который хотите удалить:" << endl;
+}
+
+void deleteRegion(List<Region>* regions, List<Сity>* cities, int number)
+{
+	if (number > regions->count() + 1 || number < 0)
+	{
+		cout << "Некорректный номер региона!" << endl;
+		return;
+	}
+
+	for (int i = 0; i < cities->count(); i++)
+	{
+		if ((*cities)[i].region == (*regions)[number - 1].name)
+		{
+			cities->removeAt(i);
+			i--;
+		}
+	}
+}
+
+int nameSearch(List<Сity>* cities, string name)
+{
+	int counter = 0;
+	for (int i = 0; i < cities->count(); i++)
+	{
+		if ((*cities)[i].name == name)
+		{
+			counter++;
+		}
+	}
+	return counter;
+}
+
 int main()
 {
 	SetConsoleCP(1251);
 	SetConsoleOutputCP(1251);
 	List<Сity> cities;
+	List<Region> regions;
+	bool regionsIsSorted = false;
 	int command;
 	showMenu();
 	cin >> command;
@@ -151,7 +194,7 @@ int main()
 			case 2:
 			{
 				string name;
-				cout << "" << endl;
+				cout << "Введите название города" << endl;
 				cin >> name;
 				deleteCity(&cities, name);
 				break;
@@ -159,18 +202,34 @@ int main()
 
 			case 3:
 			{
-				List<Region> regions = *sortRegions(&cities);
-				showRegions(&regions);
+				if (!regionsIsSorted)
+				{
+					regions = *sortRegions(&cities);
+				}
+				regionsIsSorted = true;
+				showRegionsWithPopulation(&regions);
 				break;
 			}
 
 			case 4:
 			{
+				if (!regionsIsSorted)
+				{
+					regions = *sortRegions(&cities);
+					regionsIsSorted = true;
+				}
+				int numberOfRegion;
+				regionChoiceMenu(&regions);
+				cin >> numberOfRegion;
+				deleteRegion(&regions, &cities, numberOfRegion);
+				cout << "Города региона " << (regions)[numberOfRegion-1].name <<" успешно удалены!" << endl;
+				regions.removeAt(numberOfRegion - 1);
 				break;
 			}
 
 			case 5:
-			{
+			{ 
+				cout << "В списке " << cities.count() << " городов." << endl;
 				break;
 			}
 
@@ -182,6 +241,10 @@ int main()
 
 			case 7:
 			{
+				cout << "Введите имя города" << endl;
+				string name;
+				cin >> name;
+				cout << "Город с названием " << name << " встречается в списке " << nameSearch(&cities, name) << " раз." << endl;
 				break;
 			}
 			}
